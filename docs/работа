@@ -1,0 +1,93 @@
+from docx import Document
+from docx.shared import Pt
+from docx.enum.text import WD_ALIGN_PARAGRAPH
+
+# Создаем новый документ
+doc = Document()
+
+# Заголовок
+title = doc.add_heading('АНКЕТА', level=1)
+title.alignment = WD_ALIGN_PARAGRAPH.CENTER
+
+doc.add_paragraph('форма 5 __________________БП и СОТ « Лиманчик »')
+doc.add_paragraph('г. Новороссийск, п. Абрау-Дюрсо')
+
+# Данные из паспорта
+full_name = {
+    "surname": "Андоськина",
+    "name": "Татьяна",
+    "patronymic": "Александровна"
+}
+
+birth_info = {
+    "date": "23 мая 2003",
+    "place_country": "Россия",
+    "place_region": "Ростовская область",
+    "place_city": "Ростов-на-Дону"
+}
+
+passport = {
+    "series_number": "75 313102",
+    "issued_date": "12 мая 2016",
+    "issuer": "ОСВ по Ростовской области, г. Ростов-на-Дону, ул. Королёва, д. 8/1, кв. 60",
+    "code": "61 0010"
+}
+
+address = {
+    "country": "Россия",
+    "region": "Ростовская область",
+    "city": "Ростов-на-Дону",
+    "street": "ул. Королёва",
+    "house": "8/1",
+    "flat": "60"
+}
+
+# Заполняем анкету
+doc.add_paragraph("1. Фамилия       " + full_name["surname"])
+doc.add_paragraph("2. Имя           " + full_name["name"])
+doc.add_paragraph("3. Отчество      " + full_name["patronymic"])
+doc.add_paragraph("4. Дата рождения «23» ___мая_____ 2003 г.")
+doc.add_paragraph("5. Пол           жен.")
+
+p6 = doc.add_paragraph("6. Место рождения:")
+p6.add_run("\n   страна        ").bold = True
+p6.add_run(birth_info["place_country"])
+p6.add_run("\n   регион        ").bold = True
+p6.add_run(birth_info["place_region"])
+p6.add_run("\n   город         ").bold = True
+p6.add_run(birth_info["place_city"])
+
+doc.add_paragraph("7. Гражданство     " + birth_info["place_country"])
+
+p8 = doc.add_paragraph("8. Документ, удост. личность:")
+p8.add_run("\n   вид           ").bold = True
+p8.add_run("Паспорт гражданина РФ")
+p8.add_run("\n   серия         ").bold = True
+p8.add_run(passport["series_number"])
+p8.add_run("\n   выдан         «12» ___мая_____ 2016 г.")
+p8.add_run("\n   орган, выдавший документ   ").bold = True
+p8.add_run(passport["issuer"])
+p8.add_run("\n   код           ").bold = True
+p8.add_run(passport["code"])
+
+p9 = doc.add_paragraph("9. Место жительства:")
+p9.add_run("\n   страна        ").bold = True
+p9.add_run(address["country"])
+p9.add_run("\n   регион        ").bold = True
+p9.add_run(address["region"])
+p9.add_run("\n   город         ").bold = True
+p9.add_run(address["city"])
+p9.add_run("\n   ул.           ").bold = True
+p9.add_run(address["street"])
+p9.add_run("\n   дом           ").bold = True
+p9.add_run(address["house"])
+p9.add_run("\n   кв.           ").bold = True
+p9.add_run(address["flat"])
+
+doc.add_paragraph("10. Прибыл «__» _______ ____ г.")
+doc.add_paragraph("    Выбыл  «__» _______ ____ г.")
+doc.add_paragraph("11. Зарегистрировал «__» ______ 2025 г. Подпись _______")
+
+# Сохраняем документ
+doc.save("АНКЕТА_Андоськина_Татьяна.docx")
+print("✅ Анкета успешно создана как 'АНКЕТА_Андоськина_Татьяна.docx'")
